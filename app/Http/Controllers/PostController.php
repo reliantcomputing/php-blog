@@ -15,7 +15,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::orderBy('updated_at', 'desc')->get();
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -53,7 +53,7 @@ class PostController extends Controller
             'body' => 'required|max:500'
         ]);
 
-        if (!$post->ownedBy($request->auth()->user())) {
+        if (!$post->ownedBy(auth()->user())) {
             return redirect()->route('posts')->with('error', "You can only update posts you created.");
         }
 
