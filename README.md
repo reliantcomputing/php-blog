@@ -3,7 +3,6 @@
 ### Login to your server
 
 -   Login as root
-    ``
 
 ### Set up your firewall
 
@@ -51,7 +50,7 @@
 `cd /etc/apache2`
 `sudo vi 000-default.conf`
 
-```<VirtualHost *:80>
+````<VirtualHost *:80>
 
 ServerAdmin webmaster@localhost
 
@@ -77,5 +76,13 @@ DirectoryIndex index.php index.pl index.cgi index.html index.xhtml index.htm
 
 </IfModule>
 
-</VirtualHost>
-```
+</VirtualHost>```
+
+`:wq`
+
+### Restart apache
+
+`sudo a2enmod rewrite`
+`sudo service apache2 restart`
+`sudo chmod -R 777 storage`
+````
