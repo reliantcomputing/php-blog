@@ -24,7 +24,7 @@
             <ul class="navbar-nav mb-2 mb-lg-0">
                 @guest
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="{{ route('login') }}">Login</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="{{ route('registration') }}">Register</a>
@@ -32,7 +32,7 @@
                 @endguest
                 @auth
                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Tumisho</a>
+                    <a class="nav-link active" aria-current="page" href="#">{{auth()->user()->name}}</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="#">Logout</a>
@@ -43,7 +43,26 @@
         </div>
       </nav>
       <div class="container mt-4">
-        @yield('content')
+          @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{session('error')}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          @endif
+          @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{session('success')}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          @endif
+          @if (session('info'))
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                {{session('info')}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+          @yield('content')
       </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </body>
 </html>
