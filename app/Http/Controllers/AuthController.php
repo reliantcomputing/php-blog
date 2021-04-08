@@ -49,7 +49,7 @@ class AuthController extends Controller
         if (!Auth::attempt(['email' => $req->email, 'password' => $req->password])) {
             return back()->with('error', 'Invalid login details');
         }
-        return redirect()->route('home')->with('success', 'Welcome ' . $req->email);
+        return redirect()->route('posts')->with('success', 'Welcome ' . $req->email);
     }
 
     public function logout()
