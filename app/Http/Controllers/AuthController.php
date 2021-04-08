@@ -28,7 +28,9 @@ class AuthController extends Controller
             'password' => Hash::make($req->password)
         ]);
 
-        return redirect()->route('posts');
+        Auth::attempt(['email' => $req->email, 'password' => $req->password]);
+
+        return redirect()->route('posts')->with('success', 'Register successfully!');
     }
 
     public function loginPage()
