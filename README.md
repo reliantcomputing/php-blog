@@ -16,6 +16,7 @@
 
 ### Setting up your database
 
+-   run sudo `mysql_secure_installation` and follow th instruction
 -   open mysql shell
     `sudo mysql`
 -   Create a database
@@ -68,7 +69,7 @@ DirectoryIndex index.php index.pl index.cgi index.html index.xhtml index.htm
 
 </IfModule>
 
-</VirtualHost>]
+</VirtualHost>
 
 `:wq`
 
