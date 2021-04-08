@@ -29,11 +29,15 @@ class AuthController extends Controller
             'password' => 'required|min:8|confirmed'
         ]);
 
-        User::create([
+        $is_saved = User::create([
             'name' => $req->name,
             'email' => $req->email,
             'password' => Hash::make($req->password)
         ]);
+
+        if (!$is_saved) {
+            return back()->with('info', 'Something went wrong while saving post, please try again');
+        }
 
         Auth::attempt(['email' => $req->email, 'password' => $req->password]);
 
