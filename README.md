@@ -1,6 +1,6 @@
 ## Deploy using LEMP stack
 
-## Settong up your user
+### Setting up your user
 
 -   Login as root
 -   Create a new user to avoid login in using root user
@@ -8,7 +8,30 @@
 -   Add your new user to sudo
     `usermod -aG sudo user_name`
 
-## Set up your firewall
+### Set up your firewall
+
+-   Allow SSH.
+    `ufw allow OpenSSH`
+-   Enable firewall
+    `ufw enable`
+-   Check status if all is good
+    `ufw status`
+
+### Install PHP required modules
+
+-   Update apt
+    `sudo apt update`
+-   Run the folling command to install PHP required modules
+    `sudo apt install php-mbstring php-xml php-bcmath`
+
+### Setting up your database
+
+-   open mysql shell
+    `sudo mysql`
+-   Create a database
+    `CREATE DATABASE blog;`
+-   Create a new user then grant permissions
+    `GRANT ALL ON blog.* TO 'blog_user'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;`
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
