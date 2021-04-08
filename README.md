@@ -1,26 +1,18 @@
 ## Deploy using LAMP stack
 
+### Creating a droplet at Digital ocean.
+
+-   Choose LAMP stack template
+
 ### Login to your server
 
--   Login as root
-
-### Set up your firewall
-
--   Allow SSH.
-    `ufw allow OpenSSH`
--   Enable firewall
-    `ufw enable`
--   Check status if all is good
-    `ufw status`
+-   Login as root@ip_address
 
 ### Install php and all extensions required by Laravel
 
 `apt-get update && apt-get upgrade`
-`apt-get install python-software-properties`
-`add-apt-repository ppa:ondrej/php`
-`apt-get update`
-`apt-get install php7.2`
-`apt-get install php-pear php7.2-curl php7.2-dev php7.2-gd php7.2-mbstring php7.2-zip php7.2-mysql php7.2-xml`
+`sudo apt install php-mbstring php-xml php-bcmath`
+`add-apt-install composer`
 
 ### Setting up your database
 
@@ -50,7 +42,7 @@
 `cd /etc/apache2`
 `sudo vi 000-default.conf`
 
-````<VirtualHost *:80>
+<VirtualHost \*:80>
 
 ServerAdmin webmaster@localhost
 
@@ -76,7 +68,7 @@ DirectoryIndex index.php index.pl index.cgi index.html index.xhtml index.htm
 
 </IfModule>
 
-</VirtualHost>```
+</VirtualHost>]
 
 `:wq`
 
@@ -85,4 +77,3 @@ DirectoryIndex index.php index.pl index.cgi index.html index.xhtml index.htm
 `sudo a2enmod rewrite`
 `sudo service apache2 restart`
 `sudo chmod -R 777 storage`
-````
