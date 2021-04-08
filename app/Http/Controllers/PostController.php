@@ -26,10 +26,14 @@ class PostController extends Controller
             'body' => 'required|max:500'
         ]);
 
-        $request->user()->posts()->create([
+        $is_saved = $request->user()->posts()->create([
             'title' => $request->title,
             'body' => $request->body
         ]);
+
+        if (!$is_saved) {
+            return back()->with('info', 'Something went wrong while saving post, please try again');
+        }
 
         return redirect()->route('posts')->with('success', 'Post created successfully!');
     }
@@ -50,13 +54,17 @@ class PostController extends Controller
         ]);
 
         if (!$post->ownedBy($request->auth()->user())) {
-            return redirect()->route('posts')->with('error', "You can only edit posts you created.");
+            return redirect()->route('posts')->with('error', "You can only update posts you created.");
         }
 
-        $post->update([
+        $is_updated = $post->update([
             'title' => $request->title,
             'body' => $request->body
         ]);
+
+        if (!$is_updated) {
+            return back()->with('info', 'Something went wrong while saving post, please try again');
+        }
 
         return redirect()->route('posts')->with('success', 'Post updated successfully!');
     }
@@ -64,9 +72,13 @@ class PostController extends Controller
     public function delete(Post $post)
     {
         if (!$post->ownedBy(auth()->user())) {
-            return redirect()->route('posts')->with('error', "You can only edit posts you created.");
+            return redirect()->route('posts')->with('error', "You can only delete posts you created.");
         }
-        $post->delete();
+        $is_deleted = $post->delete();
+
+        if (!$is_deleted) {
+            return back()->with('info', 'Something went wrong while saving post, please try again');
+        }
         return redirect()->route('posts')->with('success', "Post deleted successfully!");
     }
 }
