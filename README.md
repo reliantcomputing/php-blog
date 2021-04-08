@@ -1,12 +1,9 @@
-## Deploy using LEMP stack
+## Deploy using LAMP stack
 
-### Setting up your user
+### Login to your server
 
 -   Login as root
--   Create a new user to avoid login in using root user
-    `adduser user_name`
--   Add your new user to sudo
-    `usermod -aG sudo user_name`
+    ``
 
 ### Set up your firewall
 
@@ -17,12 +14,14 @@
 -   Check status if all is good
     `ufw status`
 
-### Install PHP required modules
+### Install php and all extensions required by Laravel
 
--   Update apt
-    `sudo apt update`
--   Run the folling command to install PHP required modules
-    `sudo apt install php-mbstring php-xml php-bcmath`
+`apt-get update && apt-get upgrade`
+`apt-get install python-software-properties`
+`add-apt-repository ppa:ondrej/php`
+`apt-get update`
+`apt-get install php7.2`
+`apt-get install php-pear php7.2-curl php7.2-dev php7.2-gd php7.2-mbstring php7.2-zip php7.2-mysql php7.2-xml`
 
 ### Setting up your database
 
@@ -32,55 +31,51 @@
     `CREATE DATABASE blog;`
 -   Create a new user then grant permissions
     `GRANT ALL ON blog.* TO 'blog_user'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;`
+-   Exit mysql shell
+    `exit`
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Install Laravel project from GitHub
 
--   [Simple, fast routing engine](https://laravel.com/docs/routing).
--   [Powerful dependency injection container](https://laravel.com/docs/container).
--   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
--   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
--   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
--   [Robust background job processing](https://laravel.com/docs/queues).
--   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+`cd /var/www/html`
+`git clone https://github.com/reliantcomputing/php-blog.git`
+`cd php-blog`
+`composer install`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   set db name, username: root, password: you password
+    `sudo vim .env`
+    `php artisan key:generate`
+    `php artisan migrate`
 
-## Learning Laravel
+### Apache configuration
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+`cd /etc/apache2`
+`sudo vi 000-default.conf`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```<VirtualHost *:80>
 
-## Laravel Sponsors
+ServerAdmin webmaster@localhost
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+DocumentRoot /var/www/html/php-blog/public
 
-### Premium Partners
+<Directory /var/www/html/php-blog/public>
 
--   **[Vehikl](https://vehikl.com/)**
--   **[Tighten Co.](https://tighten.co)**
--   **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
--   **[64 Robots](https://64robots.com)**
--   **[Cubet Techno Labs](https://cubettech.com)**
--   **[Cyber-Duck](https://cyber-duck.co.uk)**
--   **[Many](https://www.many.co.uk)**
--   **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
--   **[DevSquad](https://devsquad.com)**
--   **[Curotec](https://www.curotec.com/)**
--   **[OP.GG](https://op.gg)**
+Options Indexes FollowSymLinks
 
-## Contributing
+AllowOverride All
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Require all granted
 
-## Code of Conduct
+</Directory>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+ErrorLog ${APACHE_LOG_DIR}/error.log
 
-## Security Vulnerabilities
+CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+<IfModule mod_dir.c>
 
-## License
+DirectoryIndex index.php index.pl index.cgi index.html index.xhtml index.htm
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+</IfModule>
+
+</VirtualHost>
+```
