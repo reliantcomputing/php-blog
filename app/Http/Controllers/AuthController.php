@@ -49,4 +49,10 @@ class AuthController extends Controller
         }
         return redirect()->route('home')->with('success', 'Welcome ' . $req->email);
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('posts')->with('success', 'Logged out successfully!');
+    }
 }

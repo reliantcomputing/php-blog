@@ -34,9 +34,10 @@
                  <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">{{auth()->user()->name}}</a>
                   </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#">Logout</a>
-                  </li>
+                  <form class="d-flex" method="POST" action="{{route('logout')}}">
+                    @csrf
+                    <button class="btn btn-outline-success" type="submit">Logout</button>
+                  </form>
                 @endauth
             </ul>
           </div>
