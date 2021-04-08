@@ -9,7 +9,7 @@
     <title>Blog</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
           <a class="navbar-brand" href="#">Blog</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,23 +22,27 @@
               </li>
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Tumisho</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
-                </li>
+                @guest
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Register</a>
+                  </li>                   
+                @endguest
+                @auth
+                 <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Tumisho</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Logout</a>
+                  </li>
+                @endauth
             </ul>
           </div>
         </div>
       </nav>
-      <div class="container mt-4" style="background: gray">
+      <div class="container mt-4">
         @yield('content')
       </div>
 </body>
