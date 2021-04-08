@@ -21,6 +21,12 @@ class AuthController extends Controller
             'password' => 'required|confirmed'
         ]);
 
+        User::create([
+            'name' => $req->name,
+            'email' => $req->email,
+            'password' => Hash::make($req->password)
+        ]);
+
         return redirect()->route('posts');
     }
 }
