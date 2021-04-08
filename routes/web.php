@@ -27,4 +27,5 @@ Route::post('auth/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/', [PostController::class, 'index'])->name('posts');
 Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
 Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
-Route::post('/posts/{post}/update', [PostController::class, 'edit'])->name('posts.update');
+Route::post('/posts/{post}/update', [PostController::class, 'update'])->name('posts.update');
+Route::delete('/posts/{post}/delete', [PostController::class, 'delete'])->name('posts.delete');
